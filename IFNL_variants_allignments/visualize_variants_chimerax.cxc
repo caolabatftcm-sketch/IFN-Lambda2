@@ -1,0 +1,217 @@
+# =============================================================================
+# ChimeraX Script: IFN-lambda Variant Visualization (Human vs Mouse)
+# =============================================================================
+# Variants mapped:
+#   IFNL2: Human R154H  -->  Mouse R147
+#   IFNL3: Human H132R  -->  Mouse H124
+#   IFNL3: Human E175K  -->  Mouse E168
+#
+# UniProt / AlphaFold IDs:
+#   Human IFNL2: Q8IZJ0   Mouse IFNL2: Q4VK74
+#   Human IFNL3: Q8IZI9   Mouse IFNL3: Q8CGK6
+#
+# Requirements: UCSF ChimeraX 1.4+
+# Run: File > Open  (select this .cxc file)
+#      OR in ChimeraX command line: open /path/to/visualize_variants_chimerax.cxc
+# =============================================================================
+
+# --- Clean slate ---
+close session
+
+# =============================================================================
+# 1. FETCH ALPHAFOLD STRUCTURES
+# =============================================================================
+# If fetch fails, load local PDB files instead:
+#   open /path/to/AF-Q8IZJ0-F1-model_v4.pdb name human_IFNL2
+#   open /path/to/AF-Q4VK74-F1-model_v4.pdb name mouse_IFNL2
+#   open /path/to/AF-Q8IZI9-F1-model_v4.pdb name human_IFNL3
+#   open /path/to/AF-Q8CGK6-F1-model_v4.pdb name mouse_IFNL3
+
+open alphafold:Q8IZJ0 name human_IFNL2
+open alphafold:Q4VK74 name mouse_IFNL2
+open alphafold:Q8IZI9 name human_IFNL3
+open alphafold:Q8CGK6 name mouse_IFNL3
+
+# =============================================================================
+# 2. INITIAL DISPLAY
+# =============================================================================
+set bgColor white
+lighting soft
+graphics silhouettes false
+
+# Show ribbon/cartoon for all
+hide all atoms
+show ribbons
+
+# =============================================================================
+# 3. COLOR BY pLDDT (AlphaFold confidence, stored in B-factor column)
+#    ChimeraX has a built-in AlphaFold palette:
+#      pLDDT > 90   : blue       (very high)
+#      pLDDT 70-90  : lightblue  (confident)
+#      pLDDT 50-70  : yellow     (low)
+#      pLDDT < 50   : orange     (very low)
+# =============================================================================
+color bfactor #1 palette alphafold
+color bfactor #2 palette alphafold
+color bfactor #3 palette alphafold
+color bfactor #4 palette alphafold
+
+# =============================================================================
+# 4. STRUCTURAL ALIGNMENT (mouse onto human, per protein)
+# =============================================================================
+# Align IFNL2 pair
+matchmaker #2 to #1 showAlignment false
+
+# Align IFNL3 pair
+matchmaker #4 to #3 showAlignment false
+
+# =============================================================================
+# 5. DEFINE VARIANT RESIDUE SELECTIONS (using ChimeraX atom specifiers)
+# =============================================================================
+# Syntax: #model_number/chain:residue_number
+# Note: AlphaFold structures are single-chain (chain A)
+
+# IFNL2 R154H: human R154, mouse R147
+select #1/A:154   # human_IFNL2 R154
+name sel var_h_IFNL2_R154
+select #2/A:147   # mouse_IFNL2 R147
+name sel var_m_IFNL2_R147
+
+# IFNL3 H132R: human H132, mouse H124
+select #3/A:132
+name sel var_h_IFNL3_H132
+select #4/A:124
+name sel var_m_IFNL3_H124
+
+# IFNL3 E175K: human E175, mouse E168
+select #3/A:175
+name sel var_h_IFNL3_E175
+select #4/A:168
+name sel var_m_IFNL3_E168
+
+# Clear current selection
+select clear
+
+# =============================================================================
+# 6. VISUALIZE VARIANT RESIDUES
+# =============================================================================
+# Show atoms (sticks) for variant residues
+show #1/A:154 atoms
+show #2/A:147 atoms
+show #3/A:132 atoms
+show #4/A:124 atoms
+show #3/A:175 atoms
+show #4/A:168 atoms
+
+# Style: ball-and-stick
+style #1/A:154 ball
+style #2/A:147 ball
+style #3/A:132 ball
+style #4/A:124 ball
+style #3/A:175 ball
+style #4/A:168 ball
+
+# Color coding — human variants: warm, mouse equivalents: cool
+# IFNL2 R154 / R147
+color #1/A:154 firebrick atoms
+color #2/A:147 salmon atoms
+
+# IFNL3 H132 / H124
+color #3/A:132 dodger blue atoms
+color #4/A:124 cornflower blue atoms
+
+# IFNL3 E175 / E168
+color #3/A:175 forest green atoms
+color #4/A:168 medium sea green atoms
+
+# =============================================================================
+# 7. LABELS AT VARIANT Ca POSITIONS
+# =============================================================================
+label #1/A:154@CA text "R154 (Hs IFNL2)" color firebrick height 1.5
+label #2/A:147@CA text "R147 (Mm IFNL2)" color salmon height 1.5
+label #3/A:132@CA text "H132 (Hs IFNL3)" color dodger blue height 1.5
+label #4/A:124@CA text "H124 (Mm IFNL3)" color cornflower blue height 1.5
+label #3/A:175@CA text "E175 (Hs IFNL3)" color forest green height 1.5
+label #4/A:168@CA text "E168 (Mm IFNL3)" color medium sea green height 1.5
+
+# =============================================================================
+# 8. PRINT pLDDT VALUES AT VARIANT POSITIONS
+# =============================================================================
+log show
+log text "=== pLDDT values at variant positions ==="
+info #1/A:154@CA attribute bfactor
+info #2/A:147@CA attribute bfactor
+info #3/A:132@CA attribute bfactor
+info #4/A:124@CA attribute bfactor
+info #3/A:175@CA attribute bfactor
+info #4/A:168@CA attribute bfactor
+
+# =============================================================================
+# 9. SAVE NAMED VIEWS (equivalent to PyMOL scenes)
+# =============================================================================
+# View 1: IFNL2 pair overview
+hide #3 models
+hide #4 models
+view #1 #2
+view name IFNL2_pair
+
+# View 2: IFNL2 R154 close-up
+view #1/A:154 #2/A:147 pad 5
+view name IFNL2_R154_closeup
+
+# View 3: IFNL3 pair overview
+show #3 models
+show #4 models
+hide #1 models
+hide #2 models
+view #3 #4
+view name IFNL3_pair
+
+# View 4: IFNL3 H132 close-up
+view #3/A:132 #4/A:124 pad 5
+view name IFNL3_H132_closeup
+
+# View 5: IFNL3 E175 close-up
+view #3/A:175 #4/A:168 pad 5
+view name IFNL3_E175_closeup
+
+# Restore all structures visible
+show #1 models
+show #2 models
+view all
+view name all_structures
+
+# =============================================================================
+# 10. SECONDARY STRUCTURE ASSIGNMENT & SURFACE ACCESSIBILITY (optional)
+# =============================================================================
+# Uncomment to compute secondary structure (requires DSSP tool in ChimeraX):
+# dssp #1 #2 #3 #4
+
+# Uncomment to show molecular surface colored by pLDDT:
+# surface #1 enclose #1
+# color bfactor #1 palette alphafold target s
+
+# =============================================================================
+# 11. EXPORT IMAGES (optional — uncomment to use)
+# =============================================================================
+# view IFNL2_pair
+# save IFNL2_pair.png  width 2400 height 2400 supersample 3 transparentBackground false
+
+# view IFNL2_R154_closeup
+# save IFNL2_R154_closeup.png  width 2400 height 2400 supersample 3
+
+# view IFNL3_pair
+# save IFNL3_pair.png  width 2400 height 2400 supersample 3
+
+# =============================================================================
+# DONE
+# =============================================================================
+log text ""
+log text "=== IFN-lambda variant script loaded successfully ==="
+log text "Named views saved: IFNL2_pair, IFNL2_R154_closeup, IFNL3_pair, IFNL3_H132_closeup, IFNL3_E175_closeup, all_structures"
+log text "To switch views: View menu > Named Views, or type:  view name <name>"
+log text ""
+log text "Variant color key:"
+log text "  IFNL2  R154/R147  : firebrick (human) / salmon (mouse)"
+log text "  IFNL3  H132/H124  : dodger blue (human) / cornflower blue (mouse)"
+log text "  IFNL3  E175/E168  : forest green (human) / sea green (mouse)"
