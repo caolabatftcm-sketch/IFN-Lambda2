@@ -1,0 +1,153 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<title> ChimeraX Log </title>
+<script type="text/javascript">
+window.onload = function() {
+  cxlinks_base="https://www.rbvi.ucsf.edu/chimerax/docs/"
+  if(!window.navigator.userAgent.includes("ChimeraX")){
+    window.onclick = function(e){
+      if(e.target.tagName.toLowerCase()!="a")
+	return true;
+      var url=e.target.getAttribute("href").toLowerCase();
+      if(url.startsWith("help:")){
+	window.location.href = cxlinks_base + url.substring(5);
+	return false;
+      }
+      if(url.startsWith("cxcmd:")){
+	alert("This link only works in a ChimeraX browser and would execute a command.");
+	return false;
+      }
+      return true;
+    }
+    var ls=document.links;
+    for(var i=0;i<ls.length;i++){
+      var link=ls[i];
+      var url=link.getAttribute("href").toLowerCase();
+      if(url.startsWith("cxcmd:"))
+	link.style.color="darkred";
+    }
+  }
+};
+</script>
+<style>
+
+.cxcmd_as_doc {
+    display: inline;
+}
+.cxcmd_as_cmd {
+    display: none;
+}
+</style>
+</head>
+<body>
+<h1> ChimeraX Log </h1>
+
+<table border=1 cellpadding=4 cellspacing=0>
+  <thead>
+    <tr>
+      <th colspan="2">Startup Messages</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>note</i></td>      <td style="background-color:Canvas">available bundle cache has not been initialized yet</td>    </tr>
+  </tbody>
+</table><br/>You can double click a model&#x27;s Name or ID in the model panel to edit those fields<br>
+UCSF ChimeraX version: 1.11.1 (2026-01-23)<br>
+© 2016-2025 Regents of the University of California.  All rights reserved.<br>
+<a href="cxcmd:help help:credits.html">How to cite UCSF ChimeraX</a><br/><div class="cxcmd"><div class="cxcmd_as_doc"><a href="help:user/commands/open.html">open</a> /Users/anhcao/Downloads/IFNL2_HUMAN_a1297/IFNL2_HUMAN_a1297_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb</div><div class="cxcmd_as_cmd"><a href="cxcmd:open /Users/anhcao/Downloads/IFNL2_HUMAN_a1297/IFNL2_HUMAN_a1297_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb">open /Users/anhcao/Downloads/IFNL2_HUMAN_a1297/IFNL2_HUMAN_a1297_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb</a></div></div><table border=1 cellpadding=4 cellspacing=0>
+  <thead>
+    <tr>
+      <th colspan="2">Chain information for IFNL2_HUMAN_a1297_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb #1</th>
+    </tr>
+    <tr>
+      <th>Chain</th>
+      <th>Description</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:center"><a title="Select chain" href="cxcmd:select /A:1-200">A</a></td>
+      <td><a title="Show sequence" href="cxcmd:sequence chain #1/A">No description available</a></td>
+
+    </tr>
+  </tbody>
+</table><br/>Computing secondary structure<br>
+<div class="cxcmd"><div class="cxcmd_as_doc"><a href="help:user/commands/open.html">open</a> /Users/anhcao/Downloads/IFNL2_MOUSE_20cc3_0/IFNL2_MOUSE_20cc3_0_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb</div><div class="cxcmd_as_cmd"><a href="cxcmd:open /Users/anhcao/Downloads/IFNL2_MOUSE_20cc3_0/IFNL2_MOUSE_20cc3_0_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb">open /Users/anhcao/Downloads/IFNL2_MOUSE_20cc3_0/IFNL2_MOUSE_20cc3_0_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb</a></div></div><table border=1 cellpadding=4 cellspacing=0>
+  <thead>
+    <tr>
+      <th colspan="2">Chain information for IFNL2_MOUSE_20cc3_0_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb #2</th>
+    </tr>
+    <tr>
+      <th>Chain</th>
+      <th>Description</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:center"><a title="Select chain" href="cxcmd:select #2/A:1-193">A</a></td>
+      <td><a title="Show sequence" href="cxcmd:sequence chain #2/A">No description available</a></td>
+
+    </tr>
+  </tbody>
+</table><br/>Computing secondary structure<br>
+<div class="cxcmd"><div class="cxcmd_as_doc"><a href="help:user/commands/ui.html#tool-show">ui tool show</a> Matchmaker</div><div class="cxcmd_as_cmd"><a href="cxcmd:ui tool show Matchmaker">ui tool show Matchmaker</a></div></div><div class="cxcmd"><div class="cxcmd_as_doc"><a href="help:user/commands/matchmaker.html">matchmaker</a> #2 to #1</div><div class="cxcmd_as_cmd"><a href="cxcmd:matchmaker #2 to #1">matchmaker #2 to #1</a></div></div>
+                    <table border=1 cellpadding=4 cellspacing=0>
+                        <tr>
+                            <th colspan="2">Parameters</th>
+                        </tr>
+                        <tr>
+                            <td>Chain pairing</td>
+                            <td>bb</td>
+                        </tr>
+                        <tr>
+                            <td>Alignment algorithm</td>
+                            <td>Needleman-Wunsch</td>
+                        </tr>
+                        <tr>
+                            <td>Similarity matrix</td>
+                            <td>BLOSUM-62</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>SS fraction</td>
+                            <td>0.3</td>
+                        </tr>
+                        <tr>
+                            <td>Gap open (HH/SS/other)</td>
+                            <td>18/18/6</td>
+                        </tr>
+                        <tr>
+                            <td>Gap extend</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>SS matrix</td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <th></th> <th>H</th> <th>S</th> <th>O</th>
+                                    </tr>
+                                    <tr>
+                                        <th>H</th> <td align="right">6</td> <td align="right">-9</td> <td align="right">-6</td>
+                                    </tr>
+                                    <tr>
+                                        <th>S</th> <td></td> <td align="right">6</td> <td align="right">-6</td>
+                                    </tr>
+                                    <tr>
+                                        <th>O</th> <td></td> <td></td> <td align="right">4</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    
+                        <tr> <td>Iteration cutoff</td> <td>2</td></tr>
+                    </table>
+                <br/>Matchmaker IFNL2_HUMAN_a1297_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb, chain A (#1) with IFNL2_MOUSE_20cc3_0_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb, chain A (#2), sequence alignment score = 640.9<br>
+RMSD between 137 pruned atom pairs is 0.571 angstroms; (across all 187 pairs: 14.490)<br>
+<br>
+</body>
+</html>
